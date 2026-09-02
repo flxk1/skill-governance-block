@@ -1,0 +1,32 @@
+# finalise-rvnd.lg — compiled from finalise-rvnd.governance (LANGUAGE rows only).
+# Complete/verify/stage a change in rvnd-repos/RVND; coordinate peers before commit;
+# never push. The actor is granted L2; the irreversible clean-checkout verify gate
+# requires L3, so at L2 it withholds to a human (the real NO-GO this models).
+
+human owner role owner_role
+human peer  role peer_role
+actor finalise_rvnd grade L2
+
+gate work    risk medium grade L2 grant finalise_rvnd
+gate verify  risk high   grade L3 grant finalise_rvnd
+gate release risk high   grade L2 grant finalise_rvnd
+
+cord finalise_rvnd -> work
+cord finalise_rvnd -> verify
+cord finalise_rvnd -> release
+cord work    -> master
+cord verify  -> master
+cord release -> master
+
+prohibit push
+prohibit key_ops
+
+reserve commit by owner_role and peer_role
+
+obligation gates-green on release
+obligation clean-checkout-verified on release
+obligation evidence-cascade-current on release
+obligation attribution on release
+obligation no-co-authored-by on release
+
+redress commit by owner_role overturn within 7d

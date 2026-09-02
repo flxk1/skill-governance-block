@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spec.skill-governance-block/v0.1/governance-block.schema.json",
+  "title": "Skill Governance Block",
+  "description": "Shape of a skill manifest's `governance` block. Passing this schema is necessary but NOT sufficient — a block is valid iff its compiled Loomground .lg patch is well-formed (see SPEC.md §6).",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "grade": { "$ref": "#/$defs/gradeId" },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "risk"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": { "$ref": "#/$defs/kind" },
+          "risk": { "$ref": "#/$defs/risk" },
+          "grade": { "$ref": "#/$defs/gradeId" }
+        }
+      }
+    },
+    "reserved": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "by"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": { "$ref": "#/$defs/kind" },
+          "by": { "$ref": "#/$defs/target" }
+        }
+      }
+    },
+    "prohibited": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/kind" }
+    },
+    "obligations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/id" }
+    },
+    "redress": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "by"],
+        "additionalProperties": false,
+        "properties": {
+          "kind": { "$ref": "#/$defs/kind" },
+          "by": { "$ref": "#/$defs/role" },
+          "overturn": { "type": "boolean" },
+          "within": { "$ref": "#/$defs/duration" }
+        }
+      }
+    },
+    "budget": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "type": "number", "exclusiveMinimum": 0 }
+    },
+    "on-boundary": {
+      "type": "string",
+      "description": "OPTIONAL, non-normative implementation hint (e.g. an escalation target). Readers MAY ignore it."
+    }
+  },
+  "$defs": {
+    "gradeId": {
+      "type": "string",
+      "pattern": "^L[0-9]+$",
+      "description": "A grade from an ordered autonomy ladder, e.g. L2. The ladder is policy, not fixed by this spec."
+    },
+    "kind": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*$",
+      "description": "A declared action category — never an identifier, provenance, or computed value."
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*$"
+    },
+    "role": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*$"
+    },
+    "risk": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"]
+    },
+    "duration": {
+      "type": "string",
+      "pattern": "^[0-9]+[smhdw]$",
+      "description": "e.g. 24h, 7d, 30d."
+    },
+    "target": {
+      "description": "A reservation target: a single role, a conjunction, or an m-of-n quorum (distinct parties = separation of duty).",
+      "oneOf": [
+        { "$ref": "#/$defs/role" },
+        {
+          "type": "object",
+          "required": ["all"],
+          "additionalProperties": false,
+          "properties": {
+            "all": {
+              "type": "array",
+              "minItems": 2,
+              "items": { "$ref": "#/$defs/role" }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["quorum", "of"],
+          "additionalProperties": false,
+          "properties": {
+            "quorum": { "type": "integer", "minimum": 1 },
+            "of": {
+              "type": "array",
+              "minItems": 2,
+              "items": { "$ref": "#/$defs/role" }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
