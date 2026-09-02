@@ -28,7 +28,11 @@ contract itself.
 
 ## Status
 
-`v0.1`, draft. Not published; no repository created (that is the owner's call).
+`v0.1`, draft.
+
+## License
+
+Apache-2.0 (see [LICENSE](LICENSE)). Copyright 2026 flxk1.
 
 ## Validate a block
 
