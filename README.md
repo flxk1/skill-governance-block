@@ -1,43 +1,30 @@
 # skill-governance-block
+Vendor-neutral skill-manifest binding of the Loomground governance language: a skill declares its governance boundary once, in its manifest.
 
-A **vendor-neutral** spec: a skill declares its own governance boundary in its manifest,
-so *what a skill does* and *what it may do* are authored once. An **orchestrator** reads
-the block to plan before dispatch; a **governance tool** enforces it at the point of
-action. The declaration is a frontmatter *binding* of the **Loomground governance
-language**, and a block is valid iff it compiles to a well-formed Loomground patch.
+## Read
+- [`spec/SPEC.md`](spec/SPEC.md) — the contract, v0.1 draft.
+- [`examples/finalise-rvnd.md`](examples/finalise-rvnd.md) — a block, its compiled `.lg`, its validation.
+- [`docs/rationale.md`](docs/rationale.md) — design rationale.
 
-The spec names no product. Orchestrators, governance tools, agent runtimes, and hosts
-are *implementations* of this contract — collected in `bindings/`, one each, never the
-contract itself.
+## Usage
+1. Shape check: validate the `governance` mapping against `schema/governance-block.schema.json`.
+2. Authoritative check: compile the block to a Loomground `.lg` patch and run the reference validator; valid iff `WELL-FORMED`.
 
-## Contents
+## Contracts
+| item | definition |
+|---|---|
+| manifest field | `governance` mapping; fields `grade`, `actions`, `reserved`, `prohibited`, `obligations`, `redress`, `budget`, `on-boundary`; all optional (SPEC §2) |
+| target language | Loomground `.lg` policy graph: nine declarations, five verdicts (SPEC §3) |
+| reader, plan-time | plans on the block: grade gaps, reserved gated, prohibited excluded, obligations as accept-criteria, budget capped (SPEC §7) |
+| enforcer, action-time | one Loomground verdict per governed action, from the same block (SPEC §7) |
+| validity | the block compiles to a `WELL-FORMED` patch (SPEC §6) |
+| schema | `schema/governance-block.schema.json`, JSON Schema 2020-12, shape pre-check |
 
-- **`spec/SPEC.md`** — the normative, vendor-neutral spec: the `governance` block, its
-  mapping to Loomground declarations, the litmus (language / policy / host), the
-  compilation, validation, and the reader/enforcer conformance contract.
-- **`schema/governance-block.schema.json`** — machine schema for the block's *shape*
-  (a pre-check; the authoritative check is compile-and-validate against the Loomground
-  standard).
-- **`examples/`** — `finalise-rvnd`: a block, its compiled `.lg`, and the validated
-  result (`WELL-FORMED`, four verdicts confirmed); plus `registration.md`, deriving the
-  fleet-registry row + one-page brief from the same block (the loop closed — one
-  declaration ⇒ plan + enforced verdict + fleet record).
-- **`bindings/claude-code.md`** — one concrete, non-normative binding (a skill's YAML
-  frontmatter → a specific orchestrator's plan-time reader → a specific governance
-  tool's action-time hook).
+## Family
+Vendor-neutral skill-manifest binding; external contract; RVND and Claude bindings explicitly non-normative. Consumes [`loomground-governance`](https://github.com/flxk1/loomground-governance): language, schemas, reference validator. Consumed by orchestrators (reader) and governance tools (enforcer). `bindings/claude-code.md`: the Claude Code + ctrl + RVND binding.
 
 ## Status
-
-`v0.1`, draft.
+Spec v0.1, draft · 1 schema · 1 worked example · 1 binding · CI validates the schema against `examples/` and `bindings/`.
 
 ## License
-
-Apache-2.0 (see [`LICENSES/Apache-2.0.txt`](LICENSES/Apache-2.0.txt), [`NOTICE`](NOTICE), and [`REUSE.toml`](REUSE.toml)). Copyright 2026 flxk1.
-
-## Validate a block
-
-1. Shape check: validate the `governance` mapping against
-   `schema/governance-block.schema.json`.
-2. Authoritative check: compile the block to a Loomground `.lg` patch and run it through
-   the governance language's reference validator — the block is valid iff the patch is
-   `WELL-FORMED`.
+Apache-2.0 — [`LICENSES/Apache-2.0.txt`](LICENSES/Apache-2.0.txt), `NOTICE`, `REUSE.toml`.
