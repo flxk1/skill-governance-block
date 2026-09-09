@@ -12,7 +12,7 @@ contract itself.
 
 ## Contents
 
-- **`SPEC.md`** — the normative, vendor-neutral spec: the `governance` block, its
+- **`spec/SPEC.md`** — the normative, vendor-neutral spec: the `governance` block, its
   mapping to Loomground declarations, the litmus (language / policy / host), the
   compilation, validation, and the reader/enforcer conformance contract.
 - **`schema/governance-block.schema.json`** — machine schema for the block's *shape*
@@ -32,7 +32,7 @@ contract itself.
 
 ## License
 
-Apache-2.0 (see [LICENSE](LICENSE)). Copyright 2026 flxk1.
+Apache-2.0 (see [`LICENSES/Apache-2.0.txt`](LICENSES/Apache-2.0.txt), [`NOTICE`](NOTICE), and [`REUSE.toml`](REUSE.toml)). Copyright 2026 flxk1.
 
 ## Validate a block
 

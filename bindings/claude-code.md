@@ -1,6 +1,6 @@
 # Binding: Claude Code + ctrl + RVND
 
-**Non-normative.** One concrete implementation of the vendor-neutral spec (`../SPEC.md`)
+**Non-normative.** One concrete implementation of the vendor-neutral spec (`../spec/SPEC.md`)
 on a specific stack. Nothing here is part of the contract; it shows how the two roles —
 **reader** and **enforcer** — are realized here. Another host, orchestrator, or
 governance tool is a different binding of the same block.

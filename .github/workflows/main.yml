@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install jsonschema pyyaml
+      - name: Validate schema/ against the examples
+        shell: python
+        run: |
+          import json, re, sys
+          from pathlib import Path
+          try:
+              import jsonschema
+          except ImportError:
+              jsonschema = None
+          try:
+              import yaml
+          except ImportError:
+              yaml = None
+          schemas = {}
+          for p in sorted(Path("schema").glob("*.json")):
+              schemas[p.name] = json.loads(p.read_text(encoding="utf-8"))
+              if jsonschema:
+                  jsonschema.Draft202012Validator.check_schema(schemas[p.name])
+              print("schema ok:", p)
+          fence = re.compile(r"```ya?ml\n(.*?)```", re.S)
+          blocks = []
+          for p in sorted(list(Path("examples").glob("*.md")) + list(Path("bindings").glob("*.md"))):
+              for m in fence.finditer(p.read_text(encoding="utf-8")):
+                  body = m.group(1)
+                  if not re.search(r"^governance:", body, re.M):
+                      continue
+                  if yaml is None:
+                      print("parsed (no yaml module, fence only):", p)
+                      continue
+                  doc = yaml.safe_load(body.replace("---\n", ""))
+                  blocks.append((p, doc["governance"]))
+          failed = 0
+          for p, block in blocks:
+              for name, schema in schemas.items():
+                  if jsonschema:
+                      errs = list(jsonschema.Draft202012Validator(schema).iter_errors(block))
+                      for e in errs:
+                          print(f"FAIL {p} vs {name}: {e.message}")
+                      failed += len(errs)
+                      if not errs:
+                          print(f"valid: {p} vs {name}")
+                  else:
+                      print(f"parsed (no jsonschema): {p}")
+          print(f"{len(blocks)} governance blocks, {len(schemas)} schemas, {failed} errors")
+          sys.exit(1 if failed else 0)

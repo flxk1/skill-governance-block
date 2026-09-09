@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://spec.skill-governance-block/v0.1/governance-block.schema.json",
   "title": "Skill Governance Block",
-  "description": "Shape of a skill manifest's `governance` block. Passing this schema is necessary but NOT sufficient — a block is valid iff its compiled Loomground .lg patch is well-formed (see SPEC.md §6).",
+  "description": "Shape of a skill manifest's `governance` block. Passing this schema is necessary but NOT sufficient — a block is valid iff its compiled Loomground .lg patch is well-formed (see spec/SPEC.md §6).",
   "type": "object",
   "additionalProperties": true,
   "properties": {
