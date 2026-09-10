@@ -1,6 +1,9 @@
 # skill-governance-block
 Vendor-neutral skill-manifest binding of the Loomground governance language: a skill declares its governance boundary once, in its manifest.
 
+## Problem
+A skill's limits live in prose; the orchestrator and the enforcer read different things. One manifest block both read: grade, actions, reserved, prohibited, obligations.
+
 ## Read
 - [`spec/SPEC.md`](spec/SPEC.md) — the contract, v0.1 draft.
 - [`examples/finalise-rvnd.md`](examples/finalise-rvnd.md) — a block, its compiled `.lg`, its validation.
@@ -9,6 +12,14 @@ Vendor-neutral skill-manifest binding of the Loomground governance language: a s
 ## Usage
 1. Shape check: validate the `governance` mapping against `schema/governance-block.schema.json`.
 2. Authoritative check: compile the block to a Loomground `.lg` patch and run the reference validator; valid iff `WELL-FORMED`.
+
+## Example
+```
+in : examples/finalise-rvnd.md `governance:` block → schema check · examples/finalise-rvnd.lg → validate.py
+out: valid: examples/finalise-rvnd.md vs governance-block.schema.json
+     2 governance blocks, 1 schemas, 0 errors
+     WELL-FORMED
+```
 
 ## Contracts
 | item | definition |
