@@ -7,7 +7,7 @@ A skill's limits live in prose; the orchestrator and the enforcer read different
 
 ## Read
 - [`spec/SPEC.md`](spec/SPEC.md) — the contract, v0.1 draft.
-- [`examples/finalise-rvnd.md`](examples/finalise-rvnd.md) — a block, its compiled `.lg`, its validation.
+- [`examples/finalise-change.md`](examples/finalise-change.md) — a block, its compiled `.lg`, its validation.
 - [`docs/rationale.md`](docs/rationale.md) — design rationale.
 
 ## Usage
@@ -25,6 +25,6 @@ A skill's limits live in prose; the orchestrator and the enforcer read different
 | schema | `schema/governance-block.schema.json`, JSON Schema 2020-12, shape pre-check |
 
 ## Family
-Vendor-neutral skill-manifest binding; external contract; RVND and Claude bindings explicitly non-normative. Consumes [`loomground-governance`](https://github.com/flxk1/loomground-governance): language, schemas, reference validator. Consumed by orchestrators (reader) and governance tools (enforcer). `bindings/claude-code.md`: the Claude Code + ctrl + RVND binding.
+Vendor-neutral skill-manifest binding; external contract; host bindings explicitly non-normative. Consumes [`loomground-governance`](https://github.com/flxk1/loomground-governance): language, schemas, reference validator. Consumed by orchestrators (reader) and governance tools (enforcer). `bindings/claude-code.md` documents one Claude Code binding with generic reader and enforcer ports.
 
 Language: loomground — guide https://github.com/flxk1/loomground/blob/main/llms.txt (the .lg language an agent reads, emits, validates); catalogue https://github.com/flxk1/loomground/blob/main/CATALOGUE.json

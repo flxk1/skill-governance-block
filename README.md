@@ -6,7 +6,7 @@ A skill's limits live in prose; the orchestrator and the enforcer read different
 
 ## Read
 - [`spec/SPEC.md`](spec/SPEC.md) — the contract, v0.1 draft.
-- [`examples/finalise-rvnd.md`](examples/finalise-rvnd.md) — a block, its compiled `.lg`, its validation.
+- [`examples/finalise-change.md`](examples/finalise-change.md) — a block, its compiled `.lg`, its validation.
 - [`docs/rationale.md`](docs/rationale.md) — design rationale.
 
 ## Usage
@@ -15,8 +15,8 @@ A skill's limits live in prose; the orchestrator and the enforcer read different
 
 ## Example
 ```
-in : examples/finalise-rvnd.md `governance:` block → schema check · examples/finalise-rvnd.lg → validate.py
-out: valid: examples/finalise-rvnd.md vs governance-block.schema.json
+in : examples/finalise-change.md `governance:` block → schema check · examples/finalise-change.lg → validate.py
+out: valid: examples/finalise-change.md vs governance-block.schema.json
      2 governance blocks, 1 schemas, 0 errors
      WELL-FORMED
 ```
@@ -32,7 +32,7 @@ out: valid: examples/finalise-rvnd.md vs governance-block.schema.json
 | schema | `schema/governance-block.schema.json`, JSON Schema 2020-12, shape pre-check |
 
 ## Family
-Vendor-neutral skill-manifest binding; external contract; RVND and Claude bindings explicitly non-normative. Consumes [`loomground-governance`](https://github.com/flxk1/loomground-governance): language, schemas, reference validator. Consumed by orchestrators (reader) and governance tools (enforcer). `bindings/claude-code.md`: the Claude Code + ctrl + RVND binding.
+Vendor-neutral skill-manifest binding; external contract; host bindings explicitly non-normative. Consumes [`loomground-governance`](https://github.com/flxk1/loomground-governance): language, schemas, reference validator. Consumed by orchestrators (reader) and governance tools (enforcer). `bindings/claude-code.md` documents one Claude Code binding with generic reader and enforcer ports.
 
 ## Status
 Spec v0.1, draft · 1 schema · 1 worked example · 1 binding · CI validates the schema against `examples/` and `bindings/`.

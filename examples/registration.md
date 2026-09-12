@@ -7,7 +7,7 @@ operator keeps for anything that can act without per-step approval. The row/brie
 below is the `agent-governance-registry` convention (autonomy-grades pattern); any fleet
 registry is one consumer of the same block.
 
-> This is a **derivation example**, not a live-fleet registration. `finalise-rvnd` here is
+> This is a **derivation example**, not a live-fleet registration. `finalise-change` here is
 > the spec's worked example, not a deployed agent — so it is shown as the record an
 > operator *would* append when they actually deploy it, not inserted into a live
 > `agent-registry.md`.
@@ -16,7 +16,7 @@ registry is one consumer of the same block.
 
 ```
 | id            | name          | purpose                                                                 | grade | owner        | kill-switch                                                   | last-reviewed |
-| finalise-rvnd | Finalise RVND | complete/verify/stage a change to clean-checkout-green; coordinate peers before commit; never push | L2    | Felix (flxk1) | floor the grant (unset RVND_AUTONOMY_GRADE) ⇒ consequential acts hold; PreToolUse `deny` below required grade | (not deployed) |
+| finalise-change | Finalise Change | complete/verify/stage a change to clean-checkout-green; coordinate peers before commit; never push | L2    | Felix (flxk1) | floor the grant below L2 ⇒ consequential acts hold; PreToolUse `deny` below required grade | (not deployed) |
 ```
 
 Field derivation — every column comes from the block, nothing invented:
@@ -31,9 +31,9 @@ Field derivation — every column comes from the block, nothing invented:
 ## The one-page brief
 
 ```markdown
-# Finalise RVND
+# Finalise Change
 
-**ID:** finalise-rvnd
+**ID:** finalise-change
 **Owner:** Felix (flxk1)
 **Autonomy grade:** L2 — drafts/edits/tests unattended; consequential acts held to a human
 **Last reviewed:** (not deployed)
@@ -76,7 +76,7 @@ never published, never pushed. The 3am answer is acceptable *because* the bounda
 declared, not because the skill is trusted.
 
 ## Kill switch
-Drop the granted autonomy grade (unset `RVND_AUTONOMY_GRADE`, or set it below L2): every
+Drop the host's granted autonomy grade below L2: every
 consequential action then floors to `human` at the PreToolUse enforcer. `prohibited` and
 `reserved` acts are severed/withheld regardless of grade. **Tested:** not yet exercised —
 must be exercised before this skill is registered above L0 in a live fleet.

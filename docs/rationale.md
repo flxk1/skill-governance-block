@@ -24,7 +24,7 @@ contract itself.
 - **`schema/governance-block.schema.json`** — machine schema for the block's *shape*
   (a pre-check; the authoritative check is compile-and-validate against the Loomground
   standard).
-- **`examples/`** — `finalise-rvnd`: a block, its compiled `.lg`, and the validated
+- **`examples/`** — `finalise-change`: a block, its compiled `.lg`, and the validated
   result (`WELL-FORMED`, four verdicts confirmed); plus `registration.md`, deriving the
   fleet-registry row + one-page brief from the same block (the loop closed — one
   declaration ⇒ plan + enforced verdict + fleet record).

@@ -1,4 +1,4 @@
-# Example: `finalise-rvnd`
+# Example: `finalise-change`
 
 A worked block → compiled `.lg` → validated. The skill completes/verifies/stages a
 change in a repository, coordinates peers before any commit, and never pushes.
@@ -25,7 +25,7 @@ governance:
     - { kind: commit, by: owner, overturn: true, within: 7d }
 ```
 
-## Compiled patch — `finalise-rvnd.lg`
+## Compiled patch — `finalise-change.lg`
 
 See the file beside this one. Roles `owner`/`peer` compile to declared humans; each
 `actions[]` entry becomes a source gate egressing to `master`; `worktree-irreversible`

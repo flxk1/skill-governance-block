@@ -1,4 +1,4 @@
-# Binding: Claude Code + ctrl + RVND
+# Binding: Claude Code + orchestrator + enforcer
 
 **Non-normative.** One concrete implementation of the vendor-neutral spec (`../spec/SPEC.md`)
 on a specific stack. Nothing here is part of the contract; it shows how the two roles —
@@ -9,7 +9,7 @@ governance tool is a different binding of the same block.
 |---|---|---|
 | manifest carrying the block | a skill's `SKILL.md` YAML frontmatter | any skill |
 | **reader** (plan-time) | the `orchestrate` skill's governance pre-flight | ctrl-engineering `skills/orchestrate/SKILL.md` |
-| **enforcer** (action-time) | the PreToolUse hook returning a verdict | RVND `rvnd-hook-scoped` |
+| **enforcer** (action-time) | a PreToolUse hook returning a verdict | host governance hook |
 | compiler + validator | the `loomground` skill's bundled engine | loomground-governance `validate.py` |
 | the four seams the fields feed | Toolset / Dispatch / Accept / Hook | ctrl-engineering `GOVERNANCE-SEAMS.md` |
 
@@ -61,5 +61,5 @@ Compile the block to `<skill>.lg` and run the loomground skill's validator:
 python3 <loomground-skill>/validate.py <skill>.lg      # -> WELL-FORMED | REJECTED (parse|apply)
 ```
 
-A worked, validated example is in `../examples/` (`finalise-rvnd.lg` →
+A worked, validated example is in `../examples/` (`finalise-change.lg` →
 `WELL-FORMED`, with the four meaning-giving verdicts confirmed by the engine).
