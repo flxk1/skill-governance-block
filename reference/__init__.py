@@ -6,11 +6,12 @@ skill-governance-block. It is a straight port of governance-layer's fixed
 minus governance-layer's own build/CLI/skill-registry machinery, which is out of this
 spec's scope.
 
-Canonical-compiler decision (recorded here and in README.md / SPEC.md): this copy, at
+Canonical-compiler decision (recorded here and in README.md): this copy, at
 `reference/compile_block_to_lg.py`, is canonical for the spec. governance-layer is not
 made to import it (that would mean editing governance-layer, which is out of this task's
 territory); instead governance-layer keeps its own copy, and `tests/` in this repo proves
 byte-for-byte parity between what this repo's compiler emits and the committed
-`examples/finalise-change.lg`. If governance-layer's copy and this one ever diverge, this
+`examples/finalise-change.lg`. No test in this repo compares against governance-layer's
+copy, so divergence between the two is not detected here. If they ever diverge, this
 repo's copy governs the spec's meaning.
 """

@@ -30,8 +30,10 @@ SPEC §4 ("block → `.lg` patch") for this spec. It is a straight port of
 would require editing `governance-layer`, which is a separate project outside this
 repo's territory; instead `governance-layer` keeps its own copy, and this repo's
 `tests/test_compile_reproduces_lg.py` proves byte-for-byte parity between this
-compiler's output and the committed `examples/finalise-change.lg`. If the two copies
-ever diverge, this repo's `reference/` copy governs the spec's meaning.
+compiler's output and the committed `examples/finalise-change.lg`. No test in this
+repo compares against `governance-layer`'s copy, so divergence between the two copies is
+not detected here; if they ever diverge, this repo's `reference/` copy governs the
+spec's meaning.
 
 ## Contracts
 | item | definition |

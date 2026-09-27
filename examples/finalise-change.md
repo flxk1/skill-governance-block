@@ -52,11 +52,13 @@ Through the Loomground reference evaluator (parse + `check`, no `L.Reject`):
 | `commit` | high | L3 → also `reserved commit by owner and peer` | `reserved` | withhold |
 | `push` | critical | (block floor L2) → `prohibit push` | `prohibited` | withhold |
 
-Four of these give the block its meaning per SPEC §7: `auto` (below-grade *not* the
-case), `human` (`worktree-irreversible`, below grade), `reserved` (`commit`, quorum),
-`prohibited` (`push`, severed). `publish` is reserved to `owner` but is not itself a
-declared `actions[]` entry (it has no source gate to evaluate a token against); the
-fourth conformance verdict above is demonstrated by `commit`. The `human` row is the
+SPEC §7 names three conformance checks the evaluator computes directly from the
+compiled patch, and this table demonstrates each: (a) a below-grade action yields
+`human` (`worktree-irreversible`), (b) a reserved action yields `reserved` (`commit`,
+quorum), (c) a prohibited action yields `prohibited` (`push`, severed). The `auto` rows
+are the baseline where none of these applies. `publish` is reserved to `owner` but is
+not itself a declared `actions[]` entry (it has no source gate to evaluate a token
+against), so check (b) is demonstrated by `commit`. The `human` row is the
 boundary in action: a below-grade actor is withheld to a human, by declaration alone —
 the same verdict an enforcer returns at the point of action. `key-ops` (prohibited,
 alongside `push`) is likewise not itself a declared action; SPEC §7(d) — an unattached

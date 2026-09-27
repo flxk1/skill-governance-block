@@ -62,4 +62,9 @@ python3 <loomground-skill>/validate.py <skill>.lg      # -> WELL-FORMED | REJECT
 ```
 
 A worked, validated example is in `../examples/` (`finalise-change.lg` →
-`WELL-FORMED`, with the four meaning-giving verdicts confirmed by the engine).
+`WELL-FORMED`). Per SPEC §7 the evaluator computes three conformance checks directly
+from the compiled patch — (a) a below-grade action yields `human`, (b) a reserved action
+yields `reserved`, (c) a prohibited action yields `prohibited` — and the engine confirms
+each on the example. (d) an unattached obligation withholds release is a **host** test of
+the release gate (on this stack, the PreToolUse hook and accept seam), not an
+evaluator-computed verdict.
