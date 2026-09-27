@@ -51,5 +51,9 @@ Vendor-neutral skill-manifest binding; external contract; host bindings explicit
 ## Status
 Spec v0.1, draft · 1 schema · 1 worked example · 1 binding · 1 canonical reference compiler (`reference/`) · CI validates the schema against `examples/` and `bindings/`.
 
+## How this is made
+
+The code and documentation are written with Loomground agents. The maintainer reads and corrects all of it.
+
 ## License
 Apache-2.0 — [`LICENSES/Apache-2.0.txt`](LICENSES/Apache-2.0.txt), `NOTICE`, `REUSE.toml`.

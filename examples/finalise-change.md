@@ -23,6 +23,7 @@ governance:
   obligations: [ gates-green, clean-checkout-verified, evidence-cascade-current, attribution, no-co-authored-by ]
   redress:
     - { kind: commit, by: owner, overturn: true, within: 7d }
+  budget: { usd: 6, iters: 60 }
 ```
 
 ## Compiled patch — `finalise-change.lg`
