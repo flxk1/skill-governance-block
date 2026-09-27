@@ -24,8 +24,14 @@ contract itself.
 - **`schema/governance-block.schema.json`** — machine schema for the block's *shape*
   (a pre-check; the authoritative check is compile-and-validate against the Loomground
   standard).
+- **`reference/compile_block_to_lg.py`** — the canonical reference compiler for SPEC §4
+  (a port of `governance-layer`'s fixed compiler); `tests/` prove it reproduces
+  `examples/finalise-change.lg` byte for byte.
 - **`examples/`** — `finalise-change`: a block, its compiled `.lg`, and the validated
-  result (`WELL-FORMED`, four verdicts confirmed); plus `registration.md`, deriving the
+  result (`WELL-FORMED`; the three evaluator-computed SPEC §7 checks — below-grade →
+  `human`, reserved → `reserved`, prohibited → `prohibited` — confirmed by the engine,
+  while an unattached obligation withholding release is a host test, not an evaluator
+  verdict); plus `registration.md`, deriving the
   fleet-registry row + one-page brief from the same block (the loop closed — one
   declaration ⇒ plan + enforced verdict + fleet record).
 - **`bindings/claude-code.md`** — one concrete, non-normative binding (a skill's YAML
