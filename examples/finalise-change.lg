@@ -1,32 +1,68 @@
-# finalise-change.lg — compiled from finalise-change.governance (LANGUAGE rows only).
-# Complete, verify, and stage a repository change; coordinate peers before commit;
-# never push. The actor is granted L2; the irreversible clean-checkout verify gate
-# requires L3, so at L2 it withholds to a human (the real NO-GO this models).
-
-human owner role owner_role
-human peer  role peer_role
+# finalise-change.lg — compiled from the governance block (SPEC §4). Generated; do not edit by hand.
+human owner role owner
+human peer role peer
 actor finalise_change grade L2
 
-gate work    risk medium grade L2 grant finalise_change
-gate verify  risk high   grade L3 grant finalise_change
-gate release risk high   grade L2 grant finalise_change
+gate read risk low grant finalise_change
+gate edit risk medium grant finalise_change
+gate run-tests risk medium grant finalise_change
+gate run-gates risk medium grant finalise_change
+gate worktree-irreversible risk high grade L3 grant finalise_change
+gate commit risk high grade L3 grant finalise_change
+gate push risk critical grant finalise_change
 
-cord finalise_change -> work
-cord finalise_change -> verify
-cord finalise_change -> release
-cord work    -> master
-cord verify  -> master
-cord release -> master
+cord finalise_change -> read
+cord finalise_change -> edit
+cord finalise_change -> run-tests
+cord finalise_change -> run-gates
+cord finalise_change -> worktree-irreversible
+cord finalise_change -> commit
+cord finalise_change -> push
+cord read -> master
+cord edit -> master
+cord run-tests -> master
+cord run-gates -> master
+cord worktree-irreversible -> master
+cord commit -> master
+cord push -> master
 
 prohibit push
-prohibit key_ops
-
-reserve commit by owner_role and peer_role
-
-obligation gates-green on release
-obligation clean-checkout-verified on release
-obligation evidence-cascade-current on release
-obligation attribution on release
-obligation no-co-authored-by on release
-
-redress commit by owner_role overturn within 7d
+prohibit key-ops
+reserve commit by owner and peer
+reserve publish by owner
+obligation gates-green on read
+obligation gates-green on edit
+obligation gates-green on run-tests
+obligation gates-green on run-gates
+obligation gates-green on worktree-irreversible
+obligation gates-green on commit
+obligation gates-green on push
+obligation clean-checkout-verified on read
+obligation clean-checkout-verified on edit
+obligation clean-checkout-verified on run-tests
+obligation clean-checkout-verified on run-gates
+obligation clean-checkout-verified on worktree-irreversible
+obligation clean-checkout-verified on commit
+obligation clean-checkout-verified on push
+obligation evidence-cascade-current on read
+obligation evidence-cascade-current on edit
+obligation evidence-cascade-current on run-tests
+obligation evidence-cascade-current on run-gates
+obligation evidence-cascade-current on worktree-irreversible
+obligation evidence-cascade-current on commit
+obligation evidence-cascade-current on push
+obligation attribution on read
+obligation attribution on edit
+obligation attribution on run-tests
+obligation attribution on run-gates
+obligation attribution on worktree-irreversible
+obligation attribution on commit
+obligation attribution on push
+obligation no-co-authored-by on read
+obligation no-co-authored-by on edit
+obligation no-co-authored-by on run-tests
+obligation no-co-authored-by on run-gates
+obligation no-co-authored-by on worktree-irreversible
+obligation no-co-authored-by on commit
+obligation no-co-authored-by on push
+redress commit by owner overturn within 7d

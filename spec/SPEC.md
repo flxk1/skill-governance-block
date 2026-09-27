@@ -108,11 +108,11 @@ of the block — there is no behavior here that is not a Loomground declaration.
 | `actions[].kind` / `.risk` | the gate the action flows through: `gate … risk <r>` + guard categories |
 | `reserved[]` | `reserve <kind> by <target>` (`<m> of {roles}` / `role and role` = quorum) |
 | `prohibited[]` | `prohibit <kind>` (severed; overrides grants) |
-| `obligations[]` | `obligation <id> on <gate>` |
+| `obligations[]` | `obligation <id> on <gate>` — attached by declaration to every one of the skill's action source gates (see §4(3)) |
 | `redress[]` | `redress <kind> by <role> [overturn] [within <duration>]` |
 
 The verdicts that result are Loomground's, joined strictest-wins: `prohibited` (severed)
-> `refused` (no grant) > `reserved` (referred to a human) > `human` (grade withheld) >
+> `reserved` (referred to a human) > `refused` (no grant) > `human` (grade withheld) >
 `auto`. A release point acts only when the effective verdict is `auto` **and** every
 declared obligation is attached.
 
@@ -124,8 +124,15 @@ A block compiles to a Loomground `.lg` patch:
 
 1. one `actor` for the skill, granted the block `grade`;
 2. one source `gate` per `actions[]` entry, carrying its `risk` and (if any) required
-   `grade`, granted to the actor, each egressing to the single `master`;
-3. `reserve` / `prohibit` / `obligation` / `redress` lines from the matching fields;
+   `grade`, granted to the actor, each egressing to the single `master` (no intermediate
+   gate);
+3. `reserve` / `prohibit` / `redress` lines from the matching fields; each `obligations[]`
+   entry is attached by declaration to *every* action source gate for the skill — one
+   `obligation <id> on <kind>` line per (obligation, action) pair, never a line directly on
+   `master` (`master`'s class is `master`, not `gate`, so `obligation <id> on master` does
+   not parse under the Loomground reference implementation's well-formedness check). Because
+   every action gate egresses straight to `master`, attaching an obligation to each of them
+   still gates every path to `master`, per §7(d);
 4. `human` roles for every role named in `reserved`/`redress`.
 
 The compilation is mechanical and total: every field above has exactly one target line,
@@ -184,12 +191,20 @@ An implementation is block-conforming for a role iff:
 **Enforcer (action-time)** — for each governed action it returns a Loomground verdict
 computed from the compiled patch, with `unavailable`/unknown flooring to the
 weaker-safer path (never a false `auto`), and it declares its honest enforcement tier
-to the caller.
+to the caller. *Attaching* an obligation's evidence — and refusing release while an
+`obligation … on <gate>` declared on the acting gate has no attached evidence — is a
+**host** concern (§5): the Loomground evaluator reports the verdict and the declared
+obligations on a gate, but does not itself track or withhold on attachment state, which
+is not part of the `.lg` graph.
 
 A conforming implementation MUST carry a load-bearing test proving that (a) a
-below-grade action yields `human`, (b) a reserved action yields `reserved`, (c) a
-prohibited action yields `prohibited`, and (d) an unattached obligation withholds
-release — the four verdicts that give the block its meaning.
+below-grade action yields `human`, (b) a reserved action yields `reserved`, and (c) a
+prohibited action yields `prohibited` — the three verdicts the evaluator computes
+directly from the compiled patch. It MUST additionally carry a **host** test proving
+(d) an unattached obligation withholds release: with the evaluator's verdict otherwise
+`auto`, a host whose release gate does not honor a declared-but-unattached obligation
+must not release the action. (d) is a property of the host's release gate, not of the
+evaluator's verdict computation, and MUST be tested as such.
 
 ---
 
