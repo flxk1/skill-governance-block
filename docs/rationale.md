@@ -1,6 +1,6 @@
 # skill-governance-block — rationale
 
-The README as it stood before 2026-09-09, verbatim. The normative text is `spec/SPEC.md`; the README is the entry point.
+Adapted from the README as it stood before 2026-09-09. The normative text is `spec/SPEC.md`; the README is the entry point.
 
 ---
 
